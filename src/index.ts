@@ -61,6 +61,15 @@ export class RedisDRS extends Redis {
             case 'hash':
                 p.hgetall(key);
                 break;
+            case 'none':
+                // if key not exists return empty string
+                return {
+                    type: 'string',
+                    key,
+                    ttl: -1,
+                    expireAt: -1,
+                    value: '',
+                };
             default:
                 throw new Error(`Unknown type=${keyType}`);
         }
